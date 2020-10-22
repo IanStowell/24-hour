@@ -65,7 +65,7 @@ namespace SocialMedia.Services
                     {
                         Author = entity.Author,
                         CommentID = entity.CommentID,
-                        Text = entity.Text,  
+                        Text = entity.Text,
                     };
             }
         }
@@ -83,6 +83,6 @@ namespace SocialMedia.Services
             }
         }
     }
-    }
 }
+
 
