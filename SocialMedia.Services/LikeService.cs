@@ -1,5 +1,5 @@
-﻿using SocialMedia.Models;
-using SocialMedia.Data;
+﻿using SocialMedia.Data;
+using SocialMedia.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,81 +8,79 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Services
 {
-    public class CommentService
+    class LikeService
     {
         private readonly Guid _userID;
 
-        public CommentService(Guid userId)
+        public LikeService(Guid userID)
         {
-            _userID = userId;
+            _userID = userID;
         }
 
-        public bool CreateComment(CommentCreate model)
+        public bool CreateLike(LikeCreate model)
         {
             var entity =
-                new Comment()
+                new Like()
                 {
                     PostID = model.PostID,
-                    Text = model.Text,
-                    //Do we need to put the ID in here????
+                    LikedPost = model.LikedPost,
+                    Liker = model.Liker,
                 };
             using (var ctx = new ApplicationDbContext())
             {
-                ctx.Comments.Add(entity);
+                ctx.Likes.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
+
         }
 
-        public IEnumerable<CommentListItem> GetComments()
+        public IEnumerable<LikeListItem> GetList()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
-                    .Comments
+                    .Likes
                     .Select(
                         e =>
-                        new CommentListItem
+                        new LikeListItem
                         {
-                            CommentPost = e.CommentPost,
-                            Text = e.Text,
-                            CommentID = e.CommentID
+                            Liker = e.Liker,
+                            User = e.User,
                         }
                         );
                 return query.ToArray();
             }
         }
 
-        public CommentDetail GetACommentByID(int id)
+        public LikeDetail GetLikeByID(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
-                    ctx.Comments
-                    .Single(e => e.CommentID == id);
+                    ctx.Likes
+                    .Single(e => e.PostID == id);
                 return
-                    new CommentDetail
+                    new LikeDetail
                     {
-                        Author = entity.Author,
-                        CommentID = entity.CommentID,
-                        Text = entity.Text,  
+                        LikedPost = entity.LikedPost,
                     };
             }
         }
 
-        public bool DeleteComment(int CommentID)
+        public bool DeleteLike(int PostID)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
-                    ctx.Comments
-                    .Single(e => e.CommentID == CommentID);
-
-                ctx.Comments.Add(entity);
+            ctx.Likes
+            .Single(e => e.PostID == PostID);
+                ctx.Likes.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
     }
-    }
 }
+
+
 

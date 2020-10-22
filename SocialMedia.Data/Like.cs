@@ -13,5 +13,6 @@ namespace SocialMedia.Data
         public int PostID;
         public virtual Post LikedPost { get; set; }
         public virtual User Liker { get; set; }
+        public string User { get; set; } // JH added
     }
 }
