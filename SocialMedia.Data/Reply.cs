@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Data
 {
-    public class Reply : Comments
+    public class Reply : Comment
     {
         //[Required]
         //public int CommentID { get; set; }

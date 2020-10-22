@@ -10,13 +10,16 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Data
 {
-    public class Comments
+    public class Comment
     {
+        [Key]
+        public int CommentID { get; set; }
         [Required]       
         public int PostID { get; set; }
         [ForeignKey(nameof(PostID))]
         public virtual Post CommentPost { get; set; }
-        [Key]
-        public int ID { get; set; }
+        public string Text { get; set; } // JH added
+        public Guid OwnerID { get; set; } // JH added
+        public virtual User Author { get; set; } // JH added
     }
 }
