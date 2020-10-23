@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Services
 {
-    class LikeService
+    public class LikeService
     {
         private readonly Guid _userID;
 
@@ -33,7 +33,6 @@ namespace SocialMedia.Services
             }
 
         }
-
         public IEnumerable<LikeListItem> GetList()
         {
             using (var ctx = new ApplicationDbContext())

@@ -33,7 +33,7 @@ namespace SocialMedia.Services
             }
         }
 
-        public IEnumerable<PostListItem> GetList()
+        public IEnumerable<PostListItem> GetPosts()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -68,6 +68,18 @@ namespace SocialMedia.Services
                         Text = entity.Text,
                         Title = entity.Title,
                     };
+            }
+        }
+
+        public bool UpdatePost(PostEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Comments.Single(e => e.CommentID == model.PostId);
+
+                entity.Text = model.Text;
+
+                return ctx.SaveChanges() == 1;
             }
         }
 

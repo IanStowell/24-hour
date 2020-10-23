@@ -70,6 +70,18 @@ namespace SocialMedia.Services
             }
         }
 
+        public bool UpdateComment(CommentEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Comments.Single(e => e.CommentID == model.ID);
+
+                entity.Text = model.Text;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
         public bool DeleteComment(int CommentID)
         {
             using (var ctx = new ApplicationDbContext())
